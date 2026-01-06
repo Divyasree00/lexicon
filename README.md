@@ -1,8 +1,8 @@
 # Lexicon - Floating Dictionary & Vocabulary Learning Platform
 
-A **modern, minimalist floating dictionary** and **offline-first vocabulary learning platform** designed for focused learning, daily consistency, and a clean user experience.
+A **modern, minimalist floating dictionary** and ** vocabulary learning platform** designed for focused learning, daily consistency, and a clean user experience.
 
-This project combines **instant word lookup**, **daily learning challenges**, **streak tracking**, and **analytics dashboards** — all while working **fully offline**.
+This project combines **instant word lookup**, **daily learning challenges**, **streak tracking**, and **analytics dashboards** .
 
 live :[https://divyasree00.github.io/lexicon/](https://divyasree00.github.io/lexicon/)
 ---
@@ -16,12 +16,6 @@ live :[https://divyasree00.github.io/lexicon/](https://divyasree00.github.io/lex
 - Examples, synonyms, antonyms
 - Clean black & white glassmorphism UI
 
-### 🔹 Offline-First Experience
-- Works completely without internet
-- Cached word meanings and challenges
-- Streaks and analytics stored locally
-- Automatic sync when back online
-
 ### 🔹 Daily Vocabulary Challenges
 - Learn **5 words per day**
 - Difficulty-based word selection
@@ -30,7 +24,6 @@ live :[https://divyasree00.github.io/lexicon/](https://divyasree00.github.io/lex
 
 ### 🔹 Streak System
 - Daily learning streak tracking
-- Offline-safe streak logic
 - Visual feedback and animations
 - Calendar-based consistency view
 
@@ -78,14 +71,9 @@ live :[https://divyasree00.github.io/lexicon/](https://divyasree00.github.io/lex
 - IndexedDB
 - LocalStorage fallback
 
-### Offline Support
-- Service Workers
-- Progressive Web App (PWA)
-
 ### APIs
 - Free dictionary APIs (online)
-- Cached responses for offline use
-
+  
 ---
 
 ## 📦 Data Storage
@@ -120,5 +108,3 @@ live :[https://divyasree00.github.io/lexicon/](https://divyasree00.github.io/lex
 This project is licensed under the **MIT License**.
 
 
-# Run the app
-npm run dev
