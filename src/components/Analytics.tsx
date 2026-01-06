@@ -1,18 +1,16 @@
 import { motion } from 'framer-motion';
-import { TrendingUp, BookOpen, Target, Clock, BarChart3 } from 'lucide-react';
+import { TrendingUp, BookOpen, Target, Clock, BarChart3, Sparkles } from 'lucide-react';
 import { useVocabularyStore } from '@/stores/vocabularyStore';
 import { cn } from '@/lib/utils';
 
 export function Analytics() {
   const { totalWordsLearned, weeklyStats, learnedWords, currentStreak } = useVocabularyStore();
 
-  // Calculate weekly progress
   const last7DaysWords = weeklyStats.slice(-7).reduce((acc, s) => acc + s.wordsLearned, 0);
   const averageAccuracy = weeklyStats.length > 0
     ? Math.round(weeklyStats.slice(-7).reduce((acc, s) => acc + s.accuracy, 0) / Math.min(weeklyStats.length, 7))
     : 0;
 
-  // Difficulty distribution
   const difficultyDistribution = learnedWords.reduce(
     (acc, word) => {
       acc[word.difficulty]++;
@@ -26,33 +24,28 @@ export function Analytics() {
       label: 'Words Learned',
       value: totalWordsLearned,
       icon: BookOpen,
-      color: 'text-primary',
-      bg: 'bg-primary/10',
+      gradient: 'from-violet-500 to-purple-600',
     },
     {
       label: 'This Week',
       value: last7DaysWords,
       icon: TrendingUp,
-      color: 'text-success',
-      bg: 'bg-success/10',
+      gradient: 'from-emerald-500 to-green-600',
     },
     {
       label: 'Accuracy',
       value: `${averageAccuracy}%`,
       icon: Target,
-      color: 'text-streak',
-      bg: 'bg-streak/10',
+      gradient: 'from-orange-500 to-red-500',
     },
     {
       label: 'Day Streak',
       value: currentStreak,
       icon: Clock,
-      color: 'text-blue-500',
-      bg: 'bg-blue-500/10',
+      gradient: 'from-blue-500 to-cyan-500',
     },
   ];
 
-  // Learning heatmap data (last 30 days)
   const last30Days = Array.from({ length: 30 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() - (29 - i));
@@ -67,42 +60,71 @@ export function Analytics() {
 
   const maxCount = Math.max(...last30Days.map((d) => d.count), 1);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="space-y-6">
+    <motion.div 
+      className="space-y-5"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Stats grid */}
       <div className="grid grid-cols-2 gap-3">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            className="p-4 rounded-xl bg-card border border-border/50 hover-lift"
+            variants={itemVariants}
+            whileHover={{ scale: 1.03, y: -2 }}
+            className="relative p-5 rounded-2xl bg-card border border-border/40 overflow-hidden cursor-pointer transition-shadow hover:shadow-lg"
           >
-            <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center mb-3', stat.bg)}>
-              <stat.icon className={cn('w-5 h-5', stat.color)} />
-            </div>
-            <p className="text-2xl font-bold">{stat.value}</p>
-            <p className="text-xs text-muted-foreground">{stat.label}</p>
+            {/* Gradient orb */}
+            <div className={cn(
+              'absolute -top-6 -right-6 w-20 h-20 rounded-full opacity-20 blur-2xl bg-gradient-to-br',
+              stat.gradient
+            )} />
+            
+            <motion.div 
+              className={cn(
+                'w-11 h-11 rounded-xl flex items-center justify-center mb-3 bg-gradient-to-br shadow-lg',
+                stat.gradient
+              )}
+              whileHover={{ rotate: 5 }}
+            >
+              <stat.icon className="w-5 h-5 text-white" />
+            </motion.div>
+            <p className="text-3xl font-bold tracking-tight">{stat.value}</p>
+            <p className="text-xs text-muted-foreground font-medium mt-0.5">{stat.label}</p>
           </motion.div>
         ))}
       </div>
 
       {/* Learning heatmap */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="p-4 rounded-xl bg-card border border-border/50"
+        variants={itemVariants}
+        className="p-5 rounded-2xl bg-card border border-border/40"
       >
-        <div className="flex items-center gap-2 mb-4">
-          <BarChart3 className="w-4 h-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Learning Activity</span>
-          <span className="text-xs text-muted-foreground ml-auto">Last 30 days</span>
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-accent" />
+            <span className="text-sm font-semibold">Learning Activity</span>
+          </div>
+          <span className="text-xs text-muted-foreground font-medium">Last 30 days</span>
         </div>
 
-        <div className="grid grid-cols-10 gap-1">
-          {last30Days.map(({ date, count, day }, i) => (
+        <div className="grid grid-cols-10 gap-1.5">
+          {last30Days.map(({ date, count }, i) => (
             <motion.div
               key={date}
               initial={{ opacity: 0, scale: 0 }}
@@ -110,9 +132,10 @@ export function Analytics() {
               transition={{ delay: 0.3 + i * 0.01 }}
               className="relative group"
             >
-              <div
+              <motion.div
+                whileHover={{ scale: 1.3 }}
                 className={cn(
-                  'w-full aspect-square rounded-sm transition-all',
+                  'w-full aspect-square rounded-md transition-all cursor-pointer',
                   count === 0 && 'bg-secondary',
                   count > 0 && count <= maxCount * 0.33 && 'bg-success/30',
                   count > maxCount * 0.33 && count <= maxCount * 0.66 && 'bg-success/60',
@@ -120,7 +143,7 @@ export function Analytics() {
                 )}
               />
               {/* Tooltip */}
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-foreground text-background text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-foreground text-background text-[10px] font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10 shadow-lg">
                 {count} words • {date}
               </div>
             </motion.div>
@@ -128,13 +151,13 @@ export function Analytics() {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-end gap-2 mt-3 text-xs text-muted-foreground">
+        <div className="flex items-center justify-end gap-2 mt-4 text-xs text-muted-foreground font-medium">
           <span>Less</span>
           {[0, 0.33, 0.66, 1].map((level, i) => (
             <div
               key={i}
               className={cn(
-                'w-3 h-3 rounded-sm',
+                'w-3.5 h-3.5 rounded-md',
                 level === 0 && 'bg-secondary',
                 level === 0.33 && 'bg-success/30',
                 level === 0.66 && 'bg-success/60',
@@ -148,41 +171,48 @@ export function Analytics() {
 
       {/* Difficulty distribution */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="p-4 rounded-xl bg-card border border-border/50"
+        variants={itemVariants}
+        className="p-5 rounded-2xl bg-card border border-border/40"
       >
-        <p className="text-sm font-medium mb-4">Difficulty Breakdown</p>
+        <div className="flex items-center gap-2 mb-5">
+          <Sparkles className="w-4 h-4 text-accent" />
+          <p className="text-sm font-semibold">Difficulty Breakdown</p>
+        </div>
         
-        <div className="space-y-3">
+        <div className="space-y-4">
           {[
-            { label: 'Easy', count: difficultyDistribution.easy, color: 'bg-success' },
-            { label: 'Medium', count: difficultyDistribution.medium, color: 'bg-streak' },
-            { label: 'Hard', count: difficultyDistribution.hard, color: 'bg-destructive' },
-          ].map(({ label, count, color }) => {
+            { label: 'Easy', count: difficultyDistribution.easy, color: 'bg-success', gradient: 'from-emerald-500 to-green-500' },
+            { label: 'Medium', count: difficultyDistribution.medium, color: 'bg-accent', gradient: 'from-orange-500 to-amber-500' },
+            { label: 'Hard', count: difficultyDistribution.hard, color: 'bg-destructive', gradient: 'from-red-500 to-pink-500' },
+          ].map(({ label, count, gradient }, index) => {
             const total = totalWordsLearned || 1;
             const percentage = Math.round((count / total) * 100);
             
             return (
-              <div key={label} className="space-y-1">
+              <motion.div 
+                key={label} 
+                className="space-y-2"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+              >
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{label}</span>
-                  <span className="font-medium">{count}</span>
+                  <span className="text-muted-foreground font-medium">{label}</span>
+                  <span className="font-semibold">{count}</span>
                 </div>
-                <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                <div className="h-2.5 bg-secondary rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${percentage}%` }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className={cn('h-full rounded-full', color)}
+                    transition={{ duration: 0.8, delay: 0.6 + index * 0.1, ease: 'easeOut' }}
+                    className={cn('h-full rounded-full bg-gradient-to-r', gradient)}
                   />
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
