@@ -1,5 +1,13 @@
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(<App />);
+const basename =
+  import.meta.env.MODE === "production" ? "/lexicon" : "/";
+
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter basename={basename}>
+    <App />
+  </BrowserRouter>
+);
