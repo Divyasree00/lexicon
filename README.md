@@ -1,73 +1,124 @@
-# Welcome to your Lovable project
+# Lexicon - Floating Dictionary & Vocabulary Learning Platform
 
-## Project info
+A **modern, minimalist floating dictionary** and **offline-first vocabulary learning platform** designed for focused learning, daily consistency, and a clean user experience.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+This project combines **instant word lookup**, **daily learning challenges**, **streak tracking**, and **analytics dashboards** — all while working **fully offline**.
 
-## How can I edit this code?
+live :[]()
+---
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+### 🔹 Floating Dictionary
+- Draggable floating bubble that stays accessible while browsing
+- Instant word meaning lookup
+- Pronunciation (IPA + audio)
+- Examples, synonyms, antonyms
+- Clean black & white glassmorphism UI
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 🔹 Offline-First Experience
+- Works completely without internet
+- Cached word meanings and challenges
+- Streaks and analytics stored locally
+- Automatic sync when back online
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🔹 Daily Vocabulary Challenges
+- Learn **5 words per day**
+- Difficulty-based word selection
+- Quick recall and reinforcement
+- Adaptive difficulty progression
 
-**Use your preferred IDE**
+### 🔹 Streak System
+- Daily learning streak tracking
+- Offline-safe streak logic
+- Visual feedback and animations
+- Calendar-based consistency view
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🔹 Analytics Dashboard
+- **Weekly insights**
+  - Words learned
+  - Accuracy rate
+  - Time spent learning
+- **Monthly insights**
+  - Vocabulary growth
+  - Difficulty progression
+  - Learning heatmap
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🎨 Design Philosophy
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Black & white minimalist UI
+- Glassmorphism & soft shadows
+- Smooth micro-interactions
+- Distraction-free learning
+- Motion designed for clarity, not noise
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🧠 Learning Philosophy
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+- Local-first (no forced login)
+- Privacy-focused
+- Habit-building through streaks
+- Learning through repetition and recall
+- Simple over complex
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🧱 Tech Stack
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
+### Frontend
+- React / Next.js
 - Tailwind CSS
+- Framer Motion
 
-## How can I deploy this project?
+### State & Storage
+- Zustand / Redux Toolkit
+- IndexedDB
+- LocalStorage fallback
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Offline Support
+- Service Workers
+- Progressive Web App (PWA)
 
-## Can I connect a custom domain to my Lovable project?
+### APIs
+- Free dictionary APIs (online)
+- Cached responses for offline use
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📦 Data Storage
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- User progress stored in browser / local machine
+- No external database required
+- Export learning data as JSON
+- Fully functional without authentication
+
+---
+## 🔐 Privacy
+
+- No tracking  
+- No ads  
+- No forced login  
+- User owns all learning data  
+
+---
+
+## 🧩 Future Scope
+
+- Browser extension version  
+- Desktop floating assistant  
+- Android floating overlay app  
+- AI-powered difficulty adaptation  
+- Cloud sync (optional)  
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+
+# Run the app
+npm run dev
