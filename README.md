@@ -4,7 +4,7 @@ A **modern, minimalist floating dictionary** and **offline-first vocabulary lear
 
 This project combines **instant word lookup**, **daily learning challenges**, **streak tracking**, and **analytics dashboards** — all while working **fully offline**.
 
-live :[]()
+live :[https://divyasree00.github.io/lexicon/](https://divyasree00.github.io/lexicon/)
 ---
 
 ## ✨ Features
