@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
-import { BookOpen, X, Flame, Search } from 'lucide-react';
+import { BookOpen, X, Flame } from 'lucide-react';
 import { DictionaryPanel } from './DictionaryPanel';
 import { useVocabularyStore } from '@/stores/vocabularyStore';
 
@@ -31,36 +31,37 @@ export function FloatingBubble() {
         onDragEnd={(_, info) => {
           setPosition({ x: info.offset.x, y: info.offset.y });
         }}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="fixed bottom-6 right-6 z-50"
+        initial={{ scale: 0, opacity: 0, rotate: -180 }}
+        animate={{ scale: 1, opacity: 1, rotate: 0 }}
+        transition={{ type: 'spring', damping: 15, stiffness: 200, delay: 0.5 }}
+        className="fixed bottom-28 right-6 z-50"
       >
         <motion.button
           onClick={toggleOpen}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="relative w-14 h-14 rounded-full glass glass-border float-shadow flex items-center justify-center cursor-grab active:cursor-grabbing group"
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          className="relative w-14 h-14 rounded-2xl gradient-warm float-shadow flex items-center justify-center cursor-grab active:cursor-grabbing group"
         >
           <AnimatePresence mode="wait">
             {isOpen ? (
               <motion.div
                 key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
+                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.2 }}
               >
-                <X className="w-5 h-5 text-foreground" />
+                <X className="w-5 h-5 text-white" />
               </motion.div>
             ) : (
               <motion.div
                 key="book"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
+                initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.2 }}
               >
-                <BookOpen className="w-5 h-5 text-foreground" />
+                <BookOpen className="w-5 h-5 text-white" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -68,26 +69,26 @@ export function FloatingBubble() {
           {/* Streak indicator */}
           {currentStreak > 0 && !isOpen && (
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-streak flex items-center justify-center text-[10px] font-semibold text-white streak-glow"
+              initial={{ scale: 0, y: 10 }}
+              animate={{ scale: 1, y: 0 }}
+              className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-background border-2 border-accent flex items-center justify-center text-[10px] font-bold text-accent shadow-lg"
             >
-              <Flame className="w-3 h-3 animate-flame" />
+              <Flame className="w-3.5 h-3.5 animate-pulse" />
             </motion.div>
           )}
 
-          {/* Hover ring */}
+          {/* Ripple effect */}
           <motion.div
-            className="absolute inset-0 rounded-full border-2 border-foreground/10"
+            className="absolute inset-0 rounded-2xl gradient-warm"
             initial={false}
             animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.5, 0, 0.5],
+              scale: [1, 1.4, 1.4],
+              opacity: [0.4, 0, 0],
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: "easeOut",
             }}
           />
         </motion.button>
